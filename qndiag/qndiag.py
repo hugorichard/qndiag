@@ -170,6 +170,10 @@ def qndiag(C, B0=None, weights=None, max_iter=1000, tol=1e-6,
             print(' | '.join([("%d" % (t + 1)).rjust(8),
                               ("%.2e" % current_loss).rjust(8),
                               ("%.2e" % g_norm).rjust(8)]))
+
+    if g_norm >= tol * np.sqrt(n_features):  # rescale by identity
+        print("WARNING: Joint diag did not converge."
+              "Current gradient norm is %.5f" % g_norm)
     infos = {'t_list': t_list, 'gradient_list': gradient_list,
              'loss_list': loss_list}
     if return_B_list:
